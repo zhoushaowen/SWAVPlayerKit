@@ -1,0 +1,3 @@
+target "SWAVPlayerKitDemo" do
+pod 'ReactiveObjC'
+end
