@@ -16,7 +16,7 @@ extern NSString *const SWAVPlayerWillPlayVideoNotification;
 + (instancetype)sharedInstance;
 
 /**
- 播放视频,本地的和网络的都可以
+ 播放视频,本地的和远程的都可以
  
  @param URL 视频url地址
  @param readyToPlayBlock 准备播放完成的回调,如果准备播放失败了,那么playCompletedBlock就不会调用
