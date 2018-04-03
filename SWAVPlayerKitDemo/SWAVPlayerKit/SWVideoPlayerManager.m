@@ -43,7 +43,7 @@ NSString *const SWAVPlayerWillPlayVideoNotification = @"SWAVPlayerWillPlayVideoN
 }
 
 - (void)playVideoWithURL:(NSURL *)URL view:(UIView *)view readyToPlay:(void(^)(NSError *error,NSTimeInterval totalDuration))readyToPlayBlock progressBlock:(void(^)(NSTimeInterval currentTime,NSTimeInterval totalDuration))progressBlock playCompleted:(void(^)(NSError *error))playCompletedBlock {
-    NSAssert([NSThread currentThread].isMainThread, @"请在主线程中调用playAudioWithURL:readyToPlay:progressBlock:playCompleted");
+    NSAssert([NSThread currentThread].isMainThread, @"请在主线程中调用playVideoWithURL:view:readyToPlay:progressBlock:playCompleted");
     [[NSNotificationCenter defaultCenter] postNotificationName:SWAVPlayerWillPlayVideoNotification object:nil userInfo:nil];
     //开启状态栏菊花
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
