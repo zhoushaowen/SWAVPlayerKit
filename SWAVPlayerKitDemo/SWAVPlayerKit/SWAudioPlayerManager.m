@@ -69,23 +69,23 @@ NSString *const SWAVPlayerWillPlayAudioNotification = @"SWAVPlayerWillPlayAudioN
     self.readyToPlayBlock = readyToPlayBlock;
     self.progressBlock = progressBlock;
     [self configLockScreenMusicWithModel:nil];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self cancelLoad];
         [self removeObserver];
         //1.资源的请求
         AVURLAsset *asset = [AVURLAsset URLAssetWithURL:URL options:nil];
         SWLockScreenMusicModel *model = [self getLockScreenMusicModelWithURLAsset:asset];
-        dispatch_async(dispatch_get_main_queue(), ^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
             if(self.currentLockScreenMusicModel) return;
             [self configLockScreenMusicWithModel:model];
-        });
+//        });
         //2.资源的组织
         AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
         //3.资源的播放
         self.avPlayer = [AVPlayer playerWithPlayerItem:item];
         //资源准备好了再播放
         [self addObserver];
-    });
+//    });
 }
 
 - (void)cancelLoad {
@@ -361,14 +361,14 @@ NSString *const SWAVPlayerWillPlayAudioNotification = @"SWAVPlayerWillPlayAudioN
 
 #pragma mark - 短音频
 - (void)playShortAudioWithName:(NSString *)name {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSURL *url = [[NSBundle mainBundle] URLForResource:name withExtension:nil];
         SystemSoundID soundID = 0;
         AudioServicesCreateSystemSoundID((__bridge CFURLRef _Nonnull)(url), &soundID);
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:0 error:nil];
         [[AVAudioSession sharedInstance] setActive:YES error:nil];
         AudioServicesPlaySystemSound(soundID);
-    });
+//    });
 }
 
 - (void)startVibrate {
