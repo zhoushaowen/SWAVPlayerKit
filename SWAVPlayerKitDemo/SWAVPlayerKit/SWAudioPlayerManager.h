@@ -43,6 +43,11 @@ extern NSString *const SWAVPlayerWillPlayAudioNotification;
 + (instancetype)sharedInstance;
 
 /**
+ 释放单例对象
+ */
++ (void)releaseInstance;
+
+/**
  播放长音频,本地的和远程的都可以
 
  @param URL 音频url地址

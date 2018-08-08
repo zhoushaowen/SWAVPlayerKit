@@ -109,6 +109,9 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [[SWVideoPlayerManager sharedInstance] stop];
 }
+- (IBAction)releaseAction:(id)sender {
+    [SWVideoPlayerManager releaseInstance];
+}
 
 - (void)dealloc {
     NSLog(@"%s",__func__);

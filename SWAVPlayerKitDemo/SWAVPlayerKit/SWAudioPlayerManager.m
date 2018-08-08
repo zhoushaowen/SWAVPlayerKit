@@ -59,6 +59,12 @@ NSString *const SWAVPlayerWillPlayAudioNotification = @"SWAVPlayerWillPlayAudioN
     return Manager;
 }
 
++ (void)releaseInstance {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [Manager stop];
+    Manager = nil;
+}
+
 #pragma mark - AVPlayer
 - (void)playAudioWithURL:(NSURL *)URL readyToPlay:(void(^)(NSError *error,NSTimeInterval totalDuration))readyToPlayBlock progressBlock:(void(^)(NSTimeInterval currentTime,NSTimeInterval totalDuration))progressBlock playCompleted:(void(^)(NSError *error))playCompletedBlock {
     NSAssert([NSThread currentThread].isMainThread, @"请在主线程中调用playAudioWithURL:readyToPlay:progressBlock:playCompleted");
@@ -398,6 +404,7 @@ void completedCallback(SystemSoundID mmSSID,void* clientData) {
 
 - (void)dealloc {
     [self removeObserver];
+    NSLog(@"%s",__func__);
 }
 
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -66,6 +66,13 @@
                                 <action selector="stopAction:" destination="-1" eventType="touchUpInside" id="zFm-ZC-UmE"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xMK-z2-YiC">
+                            <rect key="frame" x="162" y="318" width="50" height="30"/>
+                            <state key="normal" title="release"/>
+                            <connections>
+                                <action selector="releaseAction:" destination="-1" eventType="touchUpInside" id="DGp-SA-ZrS"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                     <constraints>
@@ -73,7 +80,9 @@
                         <constraint firstItem="Mo4-kG-Ngn" firstAttribute="centerX" secondItem="d82-p2-6HW" secondAttribute="centerX" id="Y2i-fm-s2U"/>
                         <constraint firstItem="Mo4-kG-Ngn" firstAttribute="centerY" secondItem="EDp-G1-rjg" secondAttribute="centerY" id="Yq6-c9-Ial"/>
                         <constraint firstItem="cV1-bv-TTm" firstAttribute="trailing" secondItem="Eu9-NW-8bR" secondAttribute="trailingMargin" id="ZaT-pH-Eyv"/>
+                        <constraint firstItem="xMK-z2-YiC" firstAttribute="centerX" secondItem="Eu9-NW-8bR" secondAttribute="centerX" id="t8Z-kT-5Fc"/>
                         <constraint firstItem="Mo4-kG-Ngn" firstAttribute="leading" secondItem="EDp-G1-rjg" secondAttribute="trailing" constant="8" id="xGJ-H6-4Zi"/>
+                        <constraint firstItem="xMK-z2-YiC" firstAttribute="centerY" secondItem="Eu9-NW-8bR" secondAttribute="centerY" id="xgm-l0-akz"/>
                         <constraint firstItem="cV1-bv-TTm" firstAttribute="centerY" secondItem="Mo4-kG-Ngn" secondAttribute="centerY" id="zDQ-OW-4dW"/>
                     </constraints>
                 </view>

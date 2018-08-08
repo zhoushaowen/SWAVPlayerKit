@@ -34,6 +34,12 @@ NSString *const SWAVPlayerWillPlayVideoNotification = @"SWAVPlayerWillPlayVideoN
     return Manager;
 }
 
++ (void)releaseInstance {
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [Manager stop];
+    Manager = nil;
+}
+
 - (instancetype)init {
     self = [super init];
     if(self){
@@ -112,6 +118,7 @@ NSString *const SWAVPlayerWillPlayVideoNotification = @"SWAVPlayerWillPlayVideoN
 
 - (void)dealloc {
     [self removeSubscribe];
+    NSLog(@"%s",__func__);
 }
 
 

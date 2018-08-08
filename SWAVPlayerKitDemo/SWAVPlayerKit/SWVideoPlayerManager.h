@@ -16,6 +16,11 @@ extern NSString *const SWAVPlayerWillPlayVideoNotification;
 + (instancetype)sharedInstance;
 
 /**
+ 释放单例对象
+ */
++ (void)releaseInstance;
+
+/**
  播放视频,本地的和远程的都可以
  
  @param URL 视频url地址
