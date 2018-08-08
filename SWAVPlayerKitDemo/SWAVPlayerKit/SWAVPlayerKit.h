@@ -10,5 +10,7 @@
 #define _SWAVPlayerKit_
 #import "SWAudioPlayerManager.h"
 #import "SWVideoPlayerManager.h"
+#import "SWVideoHelper.h"
+
 #endif
 

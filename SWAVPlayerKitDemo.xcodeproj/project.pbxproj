@@ -13,12 +13,12 @@
 		362C57892073717200146186 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 362C57882073717200146186 /* main.m */; };
 		362C57952073718C00146186 /* SWVideoPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 362C57902073718C00146186 /* SWVideoPlayerManager.m */; };
 		362C57962073718C00146186 /* SWAudioPlayerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 362C57942073718C00146186 /* SWAudioPlayerManager.m */; };
-		362C579E207371A500146186 /* 周笔畅-最美的期待.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 362C5797207371A400146186 /* 周笔畅-最美的期待.mp3 */; };
 		362C579F207371A500146186 /* album@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 362C5798207371A400146186 /* album@2x.png */; };
 		362C57A0207371A500146186 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 362C579A207371A400146186 /* VideoViewController.m */; };
 		362C57A1207371A500146186 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 362C579B207371A400146186 /* VideoViewController.xib */; };
 		362C57A2207371A500146186 /* AudioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 362C579C207371A400146186 /* AudioViewController.m */; };
 		362C57A4207371B000146186 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362C57A3207371B000146186 /* Main.storyboard */; };
+		36E5336C211AF356005250A4 /* SWVideoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E5336A211AF355005250A4 /* SWVideoHelper.m */; };
 		74B1CA4BEC107425D638A73A /* libPods-SWAVPlayerKitDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1BE8349282A56FD5797C78 /* libPods-SWAVPlayerKitDemo.a */; };
 /* End PBXBuildFile section */
 
@@ -35,7 +35,6 @@
 		362C57922073718C00146186 /* SWAVPlayerKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWAVPlayerKit.h; sourceTree = "<group>"; };
 		362C57932073718C00146186 /* SWVideoPlayerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWVideoPlayerManager.h; sourceTree = "<group>"; };
 		362C57942073718C00146186 /* SWAudioPlayerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWAudioPlayerManager.m; sourceTree = "<group>"; };
-		362C5797207371A400146186 /* 周笔畅-最美的期待.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "周笔畅-最美的期待.mp3"; sourceTree = "<group>"; };
 		362C5798207371A400146186 /* album@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "album@2x.png"; sourceTree = "<group>"; };
 		362C5799207371A400146186 /* AudioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioViewController.h; sourceTree = "<group>"; };
 		362C579A207371A400146186 /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
@@ -43,6 +42,8 @@
 		362C579C207371A400146186 /* AudioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioViewController.m; sourceTree = "<group>"; };
 		362C579D207371A500146186 /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		362C57A3207371B000146186 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		36E5336A211AF355005250A4 /* SWVideoHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWVideoHelper.m; sourceTree = "<group>"; };
+		36E5336B211AF355005250A4 /* SWVideoHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWVideoHelper.h; sourceTree = "<group>"; };
 		D579603FE1F13C14A346273A /* Pods-SWAVPlayerKitDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SWAVPlayerKitDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SWAVPlayerKitDemo/Pods-SWAVPlayerKitDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		D7D47B167670323B8DBCDFD3 /* Pods-SWAVPlayerKitDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SWAVPlayerKitDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-SWAVPlayerKitDemo/Pods-SWAVPlayerKitDemo.release.xcconfig"; sourceTree = "<group>"; };
 		EB1BE8349282A56FD5797C78 /* libPods-SWAVPlayerKitDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SWAVPlayerKitDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +108,8 @@
 				362C57942073718C00146186 /* SWAudioPlayerManager.m */,
 				362C57932073718C00146186 /* SWVideoPlayerManager.h */,
 				362C57902073718C00146186 /* SWVideoPlayerManager.m */,
+				36E5336B211AF355005250A4 /* SWVideoHelper.h */,
+				36E5336A211AF355005250A4 /* SWVideoHelper.m */,
 			);
 			path = SWAVPlayerKit;
 			sourceTree = "<group>";
@@ -114,7 +117,6 @@
 		362C57A52073723600146186 /* supportFile */ = {
 			isa = PBXGroup;
 			children = (
-				362C5797207371A400146186 /* 周笔畅-最美的期待.mp3 */,
 				362C5798207371A400146186 /* album@2x.png */,
 			);
 			path = supportFile;
@@ -205,7 +207,6 @@
 				362C579F207371A500146186 /* album@2x.png in Resources */,
 				362C57A4207371B000146186 /* Main.storyboard in Resources */,
 				362C57A1207371A500146186 /* VideoViewController.xib in Resources */,
-				362C579E207371A500146186 /* 周笔畅-最美的期待.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +239,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				362C57A0207371A500146186 /* VideoViewController.m in Sources */,
+				36E5336C211AF356005250A4 /* SWVideoHelper.m in Sources */,
 				362C57892073717200146186 /* main.m in Sources */,
 				362C57962073718C00146186 /* SWAudioPlayerManager.m in Sources */,
 				362C577B2073717000146186 /* AppDelegate.m in Sources */,
