@@ -48,7 +48,7 @@ NSString *const SWAVPlayerWillPlayVideoNotification = @"SWAVPlayerWillPlayVideoN
     return self;
 }
 
-- (void)playVideoWithURL:(NSURL *)URL view:(UIView *)view readyToPlay:(void(^)(NSError *error,NSTimeInterval totalDuration))readyToPlayBlock progressBlock:(void(^)(NSTimeInterval currentTime,NSTimeInterval totalDuration))progressBlock playCompleted:(void(^)(NSError *error))playCompletedBlock {
+- (void)playVideoWithURL:(NSURL *)URL view:(UIView *)view videoGravity:(AVLayerVideoGravity)videoGravity readyToPlay:(void(^)(NSError *error,NSTimeInterval totalDuration))readyToPlayBlock progressBlock:(void(^)(NSTimeInterval currentTime,NSTimeInterval totalDuration))progressBlock playCompleted:(void(^)(NSError *error))playCompletedBlock {
     NSAssert([NSThread currentThread].isMainThread, @"请在主线程中调用playVideoWithURL:view:readyToPlay:progressBlock:playCompleted");
     [[NSNotificationCenter defaultCenter] postNotificationName:SWAVPlayerWillPlayVideoNotification object:nil userInfo:nil];
     //开启状态栏菊花
@@ -72,7 +72,7 @@ NSString *const SWAVPlayerWillPlayVideoNotification = @"SWAVPlayerWillPlayVideoN
     AVPlayer *avPlayer = [self.playerManager performSelector:NSSelectorFromString(@"avPlayer") withObject:nil];
     [self.playerManager performSelector:NSSelectorFromString(@"setPlayerLayer:") withObject:[AVPlayerLayer playerLayerWithPlayer:avPlayer]];
     playerLayer = [self.playerManager performSelector:NSSelectorFromString(@"playerLayer") withObject:nil];
-    playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+    playerLayer.videoGravity = videoGravity;
     if(playerLayer.superlayer == nil){
         [view.layer insertSublayer:playerLayer atIndex:0];
         //注意:这里需要用bounds,不能用frame,否则外层view发生旋转的时候playerLayer会错位
@@ -90,6 +90,10 @@ NSString *const SWAVPlayerWillPlayVideoNotification = @"SWAVPlayerWillPlayVideoN
     //资源准备好了再播放
     [self.playerManager performSelector:NSSelectorFromString(@"addObserver") withObject:nil];
 #pragma clang diagnostic pop
+}
+
+- (void)playVideoWithURL:(NSURL *)URL view:(UIView *)view readyToPlay:(void(^)(NSError *error,NSTimeInterval totalDuration))readyToPlayBlock progressBlock:(void(^)(NSTimeInterval currentTime,NSTimeInterval totalDuration))progressBlock playCompleted:(void(^)(NSError *error))playCompletedBlock {
+    [self playVideoWithURL:URL view:view videoGravity:AVLayerVideoGravityResizeAspect readyToPlay:readyToPlayBlock progressBlock:progressBlock playCompleted:playCompletedBlock];
 }
 
 - (void)play {
