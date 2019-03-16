@@ -233,12 +233,12 @@ NSString *const SWAVPlayerWillPlayAudioNotification = @"SWAVPlayerWillPlayAudioN
         @strongify(self);
         if(self.avPlayer.currentItem != note.object) return;
         NSLog(@"播放完成");
-        if(self.playCompletedBlock){
-            self.playCompletedBlock(nil);
-        }
         [self cancelLoad];
         [self removeObserver];
         self.avPlayer = nil;
+        if(self.playCompletedBlock){
+            self.playCompletedBlock(nil);
+        }
     }];
     //播放错误
     _failedToPlayToEndTimeObserver = [[NSNotificationCenter defaultCenter] addObserverForName:AVPlayerItemFailedToPlayToEndTimeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {

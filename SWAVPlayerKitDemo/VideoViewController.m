@@ -57,11 +57,13 @@
                     self.slider.maximumValue = totalDuration;
                 }
             } progressBlock:^(NSTimeInterval currentTime, NSTimeInterval totalDuration) {
+                @strongify(self)
                 [self.slider setValue:currentTime animated:YES];
                 long long min = (long long )currentTime/60;
                 long long sec = (long long)currentTime%60;
                 self.currentDurationLabel.text = [NSString stringWithFormat:@"%.2lld:%.2lld",min,sec];
             } playCompleted:^(NSError *error) {
+                @strongify(self)
                 [self reset];
             }];
         }
