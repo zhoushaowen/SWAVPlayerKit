@@ -36,7 +36,8 @@ NSString *const SWAVPlayerWillPlayAudioNotification = @"SWAVPlayerWillPlayAudioN
 
 @property (nonatomic,strong) AVPlayer *avPlayer;
 @property (nonatomic,strong) AVPlayerLayer *playerLayer;
-@property (nonatomic,weak) id timeObserver,didPlayToEndTimeObserver,failedToPlayToEndTimeObserver,audioSessionInterruptionObserver;
+@property (nonatomic,strong) AVAudioPlayer *audioPlayer;
+@property (nonatomic,weak) id timeObserver,didPlayToEndTimeObserver,failedToPlayToEndTimeObserver,audioSessionInterruptionObserver,audioPlayerObserver;
 @property (nonatomic,strong) void(^playCompletedBlock)(NSError *error);
 @property (nonatomic,strong) void(^readyToPlayBlock)(NSError *error,NSTimeInterval totalDuration);
 @property (nonatomic,strong) void(^progressBlock)(NSTimeInterval currentTime,NSTimeInterval totalDuration);
@@ -75,23 +76,23 @@ NSString *const SWAVPlayerWillPlayAudioNotification = @"SWAVPlayerWillPlayAudioN
     self.readyToPlayBlock = readyToPlayBlock;
     self.progressBlock = progressBlock;
     [self configLockScreenMusicWithModel:nil];
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self cancelLoad];
-        [self removeObserver];
-        //1.资源的请求
-        AVURLAsset *asset = [AVURLAsset URLAssetWithURL:URL options:nil];
-        SWLockScreenMusicModel *model = [self getLockScreenMusicModelWithURLAsset:asset];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-            if(self.currentLockScreenMusicModel) return;
-            [self configLockScreenMusicWithModel:model];
-//        });
-        //2.资源的组织
-        AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
-        //3.资源的播放
-        self.avPlayer = [AVPlayer playerWithPlayerItem:item];
-        //资源准备好了再播放
-        [self addObserver];
-//    });
+    //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    [self cancelLoad];
+    [self removeObserver];
+    //1.资源的请求
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:URL options:nil];
+    SWLockScreenMusicModel *model = [self getLockScreenMusicModelWithURLAsset:asset];
+    //        dispatch_async(dispatch_get_main_queue(), ^{
+    if(self.currentLockScreenMusicModel) return;
+    [self configLockScreenMusicWithModel:model];
+    //        });
+    //2.资源的组织
+    AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
+    //3.资源的播放
+    self.avPlayer = [AVPlayer playerWithPlayerItem:item];
+    //资源准备好了再播放
+    [self addObserver];
+    //    });
 }
 
 - (void)cancelLoad {
@@ -219,8 +220,8 @@ NSString *const SWAVPlayerWillPlayAudioNotification = @"SWAVPlayerWillPlayAudioN
             NSTimeInterval currentDuration = CMTimeGetSeconds(time);
             self.currentDuration = currentDuration;
             NSTimeInterval totalDuration = CMTimeGetSeconds(self.avPlayer.currentItem.duration);
-//            CGFloat progress = currentDuration/totalDuration;
-//            NSLog(@"播放进度：%f---总时长：%f",progress,totalDuration);
+            //            CGFloat progress = currentDuration/totalDuration;
+            //            NSLog(@"播放进度：%f---总时长：%f",progress,totalDuration);
             if(self.progressBlock){
                 self.progressBlock(currentDuration,totalDuration);
             }
@@ -336,7 +337,7 @@ NSString *const SWAVPlayerWillPlayAudioNotification = @"SWAVPlayerWillPlayAudioN
     dic[MPMediaItemPropertyArtist] = model.artistName?:@"";
     //设置播放进度
     dic[MPNowPlayingInfoPropertyElapsedPlaybackTime] = @(self.currentDuration);
-
+    
     if(model.albumImage){
         MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithImage:model.albumImage];
         //设置专辑图片
@@ -365,16 +366,61 @@ NSString *const SWAVPlayerWillPlayAudioNotification = @"SWAVPlayerWillPlayAudioN
     return player.duration;
 }
 
+- (void)playLongAudioWithURL:(NSURL *)url circleCount:(NSInteger)count {
+    [self removeAudioPlayerObserver];
+    NSError *error = nil;
+    _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    if(error){
+        NSLog(@"%@",error);
+    }
+    if(count < 0){
+        count = LONG_MAX;
+    }
+    _audioPlayer.numberOfLoops = count;
+    __weak typeof(self) weakSelf = self;
+    self.audioPlayerObserver = [[NSNotificationCenter defaultCenter] addObserverForName:AVAudioSessionInterruptionNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        AVAudioSessionInterruptionType type = [note.userInfo[AVAudioSessionInterruptionTypeKey] boolValue];
+        if(type == AVAudioSessionInterruptionTypeBegan){
+            NSLog(@"音频被打断");
+            [strongSelf.audioPlayer pause];
+        }else if(type == AVAudioSessionInterruptionTypeEnded){
+            NSLog(@"打断结束");
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [strongSelf.audioPlayer play];
+            });
+        }
+    }];
+    [_audioPlayer prepareToPlay];
+    // AVAudioSessionCategoryOptionDuckOthers,在本Session播放时避开其他session的音频
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionDuckOthers error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    [_audioPlayer play];
+}
+
+- (void)stopLongAudio {
+    [_audioPlayer stop];
+    [self removeObserver];
+    _audioPlayer = nil;
+}
+
+- (void)removeAudioPlayerObserver {
+    if(_audioPlayerObserver){
+        [[NSNotificationCenter defaultCenter] removeObserver:_audioPlayerObserver];
+    }
+    _audioPlayerObserver = nil;
+}
+
 #pragma mark - 短音频
 - (void)playShortAudioWithName:(NSString *)name {
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURL *url = [[NSBundle mainBundle] URLForResource:name withExtension:nil];
-        SystemSoundID soundID = 0;
-        AudioServicesCreateSystemSoundID((__bridge CFURLRef _Nonnull)(url), &soundID);
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:0 error:nil];
-        [[AVAudioSession sharedInstance] setActive:YES error:nil];
-        AudioServicesPlaySystemSound(soundID);
-//    });
+    //    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    NSURL *url = [[NSBundle mainBundle] URLForResource:name withExtension:nil];
+    SystemSoundID soundID = 0;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef _Nonnull)(url), &soundID);
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:0 error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
+    AudioServicesPlaySystemSound(soundID);
+    //    });
 }
 
 - (void)startVibrate {
@@ -404,6 +450,7 @@ void completedCallback(SystemSoundID mmSSID,void* clientData) {
 
 - (void)dealloc {
     [self removeObserver];
+    [self removeAudioPlayerObserver];
     NSLog(@"%s",__func__);
 }
 

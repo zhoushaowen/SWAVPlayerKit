@@ -37,7 +37,7 @@ extern NSString *const SWAVPlayerWillPlayAudioNotification;
 
 /**
  单例
-
+ 
  @return SWAudioPlayerManager
  */
 + (instancetype)sharedInstance;
@@ -49,7 +49,7 @@ extern NSString *const SWAVPlayerWillPlayAudioNotification;
 
 /**
  播放长音频,本地的和远程的都可以
-
+ 
  @param URL 音频url地址
  @param readyToPlayBlock 准备播放完成的回调,如果准备播放失败了,那么playCompletedBlock就不会调用
  @param progressBlock 播放进度的回调
@@ -74,7 +74,7 @@ extern NSString *const SWAVPlayerWillPlayAudioNotification;
 
 /**
  配置锁屏音乐信息
-
+ 
  @param model SWLockScreenMusicModel
  */
 - (void)configLockScreenMusicWithModel:(SWLockScreenMusicModel *)model;
@@ -103,6 +103,18 @@ extern NSString *const SWAVPlayerWillPlayAudioNotification;
  */
 - (void)stopVibrate;
 
+/**
+ 使用AVAudioPlayer播放长音频
+ 
+ @param url 资源地址
+ @param count 循环次数 如果传负数表示无限循环
+ */
+- (void)playLongAudioWithURL:(NSURL *)url circleCount:(NSInteger)count;
+
+/**
+ 停止AVAudioPlayer播放长音频
+ */
+- (void)stopLongAudio;
 /**
  使用AudioToolbox播放短音频,调用stop是不可以停止播放的
  */
