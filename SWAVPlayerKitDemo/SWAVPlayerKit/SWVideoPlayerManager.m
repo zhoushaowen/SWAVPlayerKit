@@ -93,7 +93,7 @@ NSString *const SWAVPlayerWillPlayVideoNotification = @"SWAVPlayerWillPlayVideoN
 }
 
 - (void)playVideoWithURL:(NSURL *)URL view:(UIView *)view readyToPlay:(void(^)(NSError *error,NSTimeInterval totalDuration))readyToPlayBlock progressBlock:(void(^)(NSTimeInterval currentTime,NSTimeInterval totalDuration))progressBlock playCompleted:(void(^)(NSError *error))playCompletedBlock {
-    [self playVideoWithURL:URL view:view videoGravity:AVLayerVideoGravityResize readyToPlay:readyToPlayBlock progressBlock:progressBlock playCompleted:playCompletedBlock];
+    [self playVideoWithURL:URL view:view videoGravity:AVLayerVideoGravityResizeAspect readyToPlay:readyToPlayBlock progressBlock:progressBlock playCompleted:playCompletedBlock];
 }
 
 - (void)play {

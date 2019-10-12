@@ -33,7 +33,7 @@ extern NSString *const SWAVPlayerWillPlayVideoNotification;
  */
 - (void)playVideoWithURL:(NSURL *)URL view:(UIView *)view videoGravity:(AVLayerVideoGravity)videoGravity readyToPlay:(void(^)(NSError *error,NSTimeInterval totalDuration))readyToPlayBlock progressBlock:(void(^)(NSTimeInterval currentTime,NSTimeInterval totalDuration))progressBlock playCompleted:(void(^)(NSError *error))playCompletedBlock;
 /**
- 默认的videoGravity是AVLayerVideoGravityResize
+ 默认的videoGravity是AVLayerVideoGravityResizeAspect 表示不改变视频比例的情况下自适应播放视图大小
  */
 - (void)playVideoWithURL:(NSURL *)URL view:(UIView *)view readyToPlay:(void(^)(NSError *error,NSTimeInterval totalDuration))readyToPlayBlock progressBlock:(void(^)(NSTimeInterval currentTime,NSTimeInterval totalDuration))progressBlock playCompleted:(void(^)(NSError *error))playCompletedBlock;
 
